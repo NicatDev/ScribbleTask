@@ -1,0 +1,394 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{ blog.title }}</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+   
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.11.1/sweetalert2.min.js" integrity="sha512-Ozu7Km+muKCuIaPcOyNyW8yOw+KvkwsQyehcEnE5nrr0V4IuUqGZUKJDavjSCAA/667Dt2z05WmHHoVVb7Bi+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.11.1/sweetalert2.css" integrity="sha512-n1PBkhxQLVIma0hnm731gu/40gByOeBjlm5Z/PgwNxhJnyW1wYG8v7gPJDT6jpk0cMHfL8vUGUVjz3t4gXyZYQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS
+        ============================================ -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <!-- Flaticon -->
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <!-- Base Icons -->
+    <link rel="stylesheet" href="{% static 'css/pbminfotech-base-icons.css' %}">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- Slick -->
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}"> 
+    <!-- Magnific -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}"> 
+    <!-- AOS -->
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}"> 
+    <!-- Shortcode CSS -->
+    <link rel="stylesheet" href="{% static 'css/shortcode.css' %}">
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body class="single-post">
+
+   <!-- Page Wrapper -->
+   <div class="page-wrapper">
+
+	<!-- Header Main Area -->
+	{% include 'header.html' %}
+	<!-- Header Main Area End Here -->
+
+	<!-- Title Bar -->
+
+    <!-- Title Bar End-->
+
+	<!-- Page Content -->
+	<div class="page-content"> 
+
+		<!-- Blog Single Details -->
+		<section class="site_content blog-details">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-9 blog-right-col">
+						<div class="row">
+							<div class="col-md-12">
+								<article>
+									<div style="margin-bottom:20px;" class="post blog-classic">    
+										
+										<div class="pbmit-blog-classic-inner">
+										
+											<div class="pbmit-entry-content">
+												
+												<h1 class="mb-3 service_title">{{ blog.title }}</h1>
+												<div class="pbmit-blog-meta pbmit-blog-meta-top">	
+													<span class="pbmit-meta pbmit-meta-date">
+														<i class="pbmit-base-icon-calendar-3"></i>
+														<a href="{% url 'blog' blog.slug %}" rel="bookmark">
+															<time class="entry-date published" datetime="{{ blog.created_at }}">{{ blog.created_at }}</time>
+															
+														</a>
+													</span>
+													{% if blog.writer %}
+													<span class="pbmit-meta pbmit-meta-author">
+														<i class="pbmit-base-icon-user-3"></i>
+														<a class="pbmit-author-link" href="{% url 'blog' blog.slug %}">{{ blog.writer }}</a>
+													</span>
+													{% endif %}
+													<span class="pbmit-meta pbmit-comment-bigger-than-zero">
+														<i class="pbmit-base-icon-chat-3"></i><span id="blogCommentUp">{{ blog.comments.count }} şərh</span>
+													</span>				
+												</div>
+												<p>{{ blog.content }}</p>
+
+												{% for section in blog.blogSections.all %}
+													<h3 class="mb-3 service_section_title">{{ section.title }}</h3>
+													<p>{{ section.content }}</p>
+													{% if section.image %}
+													<div class="pbmit-block-columns row">
+													
+														{% if section.image %}
+														<div class="pbmit-block-column col-md-12 col-xl-{% if section.image2 %}6{% else %}12{% endif %}">
+															<figure>
+																<img src="{{ section.image.url }}" class="img-fluid w-100" alt="">
+															</figure>
+														</div>
+														{% endif %}
+														{% if section.image2 %}
+														<div class="pbmit-block-column col-md-12 col-xl-6">
+															<figure>
+																<img src="{{ section.image2.url }}" class="img-fluid w-100" alt="">
+															</figure>
+														</div>
+														{% endif %}
+													</div>
+													{% endif %}
+												{% endfor %}
+												
+											</div>
+											<div style="margin-top:0px;" class="pbmit-blog-meta-bottom">
+												<div class="pbmit-blog-meta-bottom-left">
+													<span class="pbmit-meta-tags">
+														{% for tag in blog.tag.all %}
+														<a  rel="tag"><h5 style="font-size:16px;font-weight:500;text-transform: capitalize;">{{ tag.title }}</h5></a>
+														{% endfor %}
+											
+													</span>
+												</div>
+											</div>
+										</div>   
+									</div> 
+					
+								</article>
+								<div class="comments-area">
+									<h2 class="comments-title" id="commentCount">{{ blog.comments.count }} şərh	</h2>
+									<ul class="comment-list" id="parentDiv">
+										{% for comment in blog.comments.all %}
+										<li class="comment depth-1">
+											<div class="pbmit-comment">
+												
+												<div class="pbmit-comment-content">
+													<div class="pbmit-comment-meta">
+														<span class="pbmit-comment-author">
+															<span class="pbmit-comment-author-inner">{{ comment.full_name }}</span>
+														</span>
+														<span class="pbmit-comment-date">
+															<a href="#">{{ comment.date }}</a>
+														</span>
+													</div>
+													<p>{{ comment.description }}</p>
+
+												</div>
+											</div>
+									
+										</li>
+										{% endfor %}
+									</ul>
+									<div class="comment-respond">
+										<h3 class="comment-reply-title">Şərh yaz </h3>
+										<div class="comment-form">
+											<p class="comment-notes">Əlaqə məlumatlarınız şərhlərdə yayınlanmayacaq. Gizliliyiniz Dental Harmony tərəfindən qorunur. Şərhlərinizin cavalanmasını istədiyiniz halda əlaqə məlumatlarınız daxil edə bilərsiniz.</p>
+											<form class="contact-form"  id="contact-form" onsubmit="submitForm2(event)">
+												<div class="row">
+													<div class="col-sm-12">
+														<textarea class="form-control" name="description" id="description" placeholder="Şərhinizi daxil edin" rows="3"></textarea>
+													</div>
+													<div class="col-sm-4"> 
+														<input id="full_name" type="text" placeholder="Ad və Soyadınızı daxil edin." class="form-control" name="full_name">
+													</div>
+													<div class="col-sm-4"> 
+														<input id="email" class="form-control" placeholder="E-poçt ünvanını daxil edin." name="email" type="email" value="">
+													</div>
+													<div class="col-sm-4"> 
+														<input id="phone_number" class="form-control" placeholder="Əlaqə nömrənizi daxil edin." name="phone_number" type="text" value="">
+													</div>
+													
+														
+													<input id="blog" class="form-control" type="hidden" name="blog" type="text" value="{{ blog.id }}">
+													<div class="col-sm-12"> 
+														<button style="text-transform: capitalize;" type="submit" class="pbmit-btn">Şərhi göndər</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-3 blog-left-col">
+						<aside class="sidebar">
+							<aside class="widget widget-search">
+								<h2 class="widget-title">Bloqlarda axtar...</h2>
+								<form class="search-form" action="{% url 'blogs' %}">
+									{{ form.query }}
+									<button type="submit" class="search-submit"></button>
+								</form>
+							</aside>
+							<aside class="widget widget-categories">
+								<h2 class="widget-title">Kateqoriyalar</h2>
+								<ul>
+									{% for category in categories %}
+									<li>
+										<span class="pbmit-cat-li {% if currentCategory == category %} active {% endif %}">
+											<a  href="{% if currentCategory == category %}{% url 'blogs' %}{% else %}{% url 'blogs' %}?category={{category.slug}}{% endif %}"><h4 class="category-tag">{{ category.title }}</h4></a>
+											<span class="pbmit-brackets">( {{ category.categoryBlogs.count }} )</span>
+										</span>
+									</li>
+									{% endfor %}
+								</ul>
+							</aside>
+							<aside class="widget widget-recent-post">
+								<h2 class="widget-title">Digər bloqlar </h2>
+									<ul class="recent-post-list">
+										{% for blog in related_blogs %}
+										<li class="recent-post-list-li"> 
+										
+											<div class="pbmit-rpw-content">
+												<span class="pbmit-rpw-date">
+													<a href="{% url 'blog' blog.slug %}">{{ blog.created_at }}</a>
+												</span>
+												<span class="pbmit-rpw-title">
+													<a href="{% url 'blog' blog.slug %}">{{ blog.title }}</a>
+												</span>
+											</div> 
+										</li>
+										{% endfor %}
+									</ul>
+							</aside> 
+				
+						</aside>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Blog Single Details End -->
+		
+	</div>
+	<!-- Page Content End -->
+
+	<!-- footer -->
+	{% include 'footer.html' %}
+	<!-- footer End -->
+
+    </div>
+    <!-- Page Wrapper End -->
+
+    <!-- Search Box Start Here -->
+    <div class="pbmit-search-overlay">
+		<div class="pbmit-icon-close">
+			<svg class="qodef-svg--close qodef-m" xmlns="http://www.w3.org/2000/svg" width="28.163" height="28.163" viewBox="0 0 26.163 26.163">
+				<rect width="36" height="1" transform="translate(0.707) rotate(45)"></rect>
+				<rect width="36" height="1" transform="translate(0 25.456) rotate(-45)"></rect>
+			</svg>
+		</div>
+		<div class="pbmit-search-outer"> 
+			<form class="pbmit-site-searchform">
+				<input type="search" class="form-control field searchform-s" name="s" placeholder="Search …">
+				<button type="submit"></button>
+			</form>
+		</div>
+	</div>
+    <!-- Search Box End Here -->
+	
+	<!-- Scroll To Top -->
+	<div class="pbmit-progress-wrap">
+		<svg class="pbmit-progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+		</svg>	
+	</div>
+	<!-- Scroll To Top End -->
+	
+    <!-- JS
+        ============================================ -->
+		<script>
+		var count = {{ blog.comments.count }}	
+		</script>
+		<script>
+			async function submitForm2(event) {
+				event.preventDefault();
+				const formData = new FormData(document.getElementById('contact-form'));
+				const response = await fetch('{% url "comment" %}', {
+					method: 'POST',
+					body: formData,
+					headers: {
+						'X-CSRFToken': '{{ csrf_token }}'
+					}
+				});
+	
+				const result = await response.json();
+	
+				if (result.status === 'success') {
+					document.getElementById('contact-form').reset()
+					count++
+					countTag = document.getElementById('commentCount')
+					countTag2 = document.getElementById('blogCommentUp')
+					countTag.innerText  = `${count} Şərh`
+					countTag2.innerText  = `${count} Şərh`
+					var fullName = document.getElementById('full_name').value;
+			;
+					var description = document.getElementById('description').value;
+
+					var newCommentHTML = `
+						<li class="comment depth-1">
+							<div class="pbmit-comment">
+								<div class="pbmit-comment-content">
+									<div class="pbmit-comment-meta">
+										<span class="pbmit-comment-author">
+											<span class="pbmit-comment-author-inner">${fullName}</span>
+										</span>
+										<span class="pbmit-comment-date">
+											<a href="#">0 dəqiqə öncə</a>
+										</span>
+									</div>
+									<p>${description}</p>
+								</div>
+							</div>
+						</li>
+					`;
+					document.getElementById('parentDiv').insertAdjacentHTML('beforeend', newCommentHTML);
+
+					Swal.fire('Göndərildi!', result.message, 'success');
+				} else {
+					let errorMessages = '';
+					for (let field in result.errors) {
+						switch(field) {
+							case 'full_name':
+								errorMessages += `Ad, soyad: ${result.errors[field].join(', ')}\n`;
+								break;
+							case 'email':
+								errorMessages += `E-poçt: ${result.errors[field].join(', ')}\n`;
+								break;
+							case 'phone':
+								errorMessages += `Əlaqə nömrəsi: ${result.errors[field].join(', ')}\n`;
+								break;
+							case 'description':
+								errorMessages += `Mövzu: ${result.errors[field].join(', ')}\n`;
+								break;
+							
+							default:
+								errorMessages += `${field}: ${result.errors[field].join(', ')}\n`;
+								break;
+						}
+						break;
+					}
+					Swal.fire('Xəta!', errorMessages, 'error');
+				}
+			}
+		</script>
+
+		
+	<!-- jQuery JS -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!-- Popper JS -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- Bootstrap JS -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- jquery Waypoints JS -->
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<!-- jquery Appear JS -->
+	<script src="{% static 'js/jquery.appear.js' %}"></script>
+	<!-- Numinate JS -->
+	<script src="{% static 'js/numinate.min.js' %}"></script>
+	<!-- Slick JS -->
+	<script src="{% static 'js/swiper.min.js' %}"></script>
+	<!-- Magnific JS -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- Circle Progress JS -->
+	<script src="{% static 'js/circle-progress.js' %}"></script> 
+	<!-- countdown JS -->
+	<script src="{% static 'js/jquery.countdown.min.js' %}"></script> 
+	<!-- AOS -->
+	<script src="{% static 'js/aos.js' %}"></script>
+	<!-- GSAP -->
+	<script src="{% static 'js/gsap.js' %}"></script>
+	<!-- Scroll Trigger -->
+	<script src="{% static 'js/ScrollTrigger.js' %}"></script>
+	<!-- Split Text -->
+	<script src="{% static 'js/SplitText.js' %}"></script>
+	<!-- Magnetic -->
+	<script src="{% static 'js/magnetic.js' %}"></script>
+	<!-- GSAP Animation -->
+	<script src="{% static 'js/gsap-animation.js' %}"></script>
+	<!-- Scripts JS -->
+	<script src="{% static 'js/scripts.js' %}"></script>
+
+   </body>
+
+</html>

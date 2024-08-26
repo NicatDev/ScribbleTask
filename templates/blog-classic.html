@@ -1,0 +1,288 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Nicat Məmmədov</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS
+        ============================================ -->
+
+    <!-- Bootstrap CSS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <!-- Flaticon -->
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <!-- Base Icons -->
+    <link rel="stylesheet" href="{% static 'css/pbminfotech-base-icons.css' %}">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- Slick -->
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}"> 
+    <!-- Magnific -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}"> 
+    <!-- AOS -->
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}"> 
+    <!-- Shortcode CSS -->
+    <link rel="stylesheet" href="{% static 'css/shortcode.css' %}">
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body>
+
+   <!-- Page Wrapper -->
+   <div class="page-wrapper">
+
+	{% include 'header.html' %}
+	
+	
+	<!--Page Content -->
+	<div class="page-content">
+		<div class="head-bar">
+			<h1 class="head-bar-text">Bloqlar</h1>
+		</div>
+		<!-- Blog Classic -->
+		<section class="site_content blog_classic">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-lg-9 blog-right-col">
+						
+						
+						<div class="row pbmit-element-posts-wrapper">
+							{% if blogs %}
+							{% for blog in blogs %}
+							
+							<article class="post blog-classic" id="bloq-{{blog.id}}">   
+								<div class="pbmit-featured-img-wrapper">
+									<div class="pbmit-featured-wrapper">
+										<div class="deleteBlog-class" onclick="deleteBlog('{{blog.id}}')" style="cursor:pointer;position:absolute;right:2%;top:5%;color:red;background-color:white;border:1px solid black;padding:0px 10px;border-radius:10px;font-weight:700;">Bloqu sil <img src="https://img.icons8.com/?size=100&id=102350&format=png&color=000000" style="height:30px;"></div>
+										<a >
+											{% if blog.image %}
+											<img style="width:100%;min-height:220px;" src="{{ blog.image.url }}" class="img-fluid" alt="{{ blog.title }}">
+											{% endif %}
+										</a>
+									</div>
+									<span class="pbmit-meta pbmit-meta-cat">
+										<a  rel="category tag">{{ blog.category }}</a>
+									</span>
+								</div>  
+								<div class="pbmit-blog-classic-inner">
+									<div class="pbmit-blog-meta pbmit-blog-meta-top">	
+										<span class="pbmit-meta pbmit-meta-date">
+											<i class="pbmit-base-icon-calendar-3"></i>
+											<a href="{% url 'blog' blog.slug %}" rel="bookmark">
+												<time class="entry-date published" datetime="{{ blog.created_at }}">{{ blog.created_at }}</time>
+												
+											</a>
+										</span>
+										{% if blog.writer %}
+										<span class="pbmit-meta pbmit-meta-author">
+											<i class="pbmit-base-icon-user-3"></i>
+											<a class="pbmit-author-link" href="{% url 'blog' blog.slug %}">{{ blog.writer }}</a>
+										</span>
+										{% endif %}
+										<span class="pbmit-meta pbmit-meta-comments pbmit-comment-bigger-than-zero">
+											<i class="pbmit-base-icon-chat-3"></i>{{ blog.comments.count }} şərh
+										</span>			
+									</div>
+									<h3 class="pbmit-post-title">
+										<a href="{% url 'blog' blog.slug %}">{{ blog.title }}</a>
+									</h3>
+									<div class="pbmit-entry-content">
+										<div class="pbmit-firstletter-blog">
+											<p>{{ blog.content }}</p>
+										</div>
+										<a class="pbmit-btn" href="{% url 'blog' blog.slug %}">
+											<span class="pbmit-button-content-wrapper">
+												<span class="pbmit-button-icon pbmit-align-icon-right">
+													<svg xmlns="http://www.w3.org/2000/svg" width="22.76" height="22.76" viewBox="0 0 22.76 22.76">
+														<title>black-arrow</title>
+														<path d="M22.34,1A14.67,14.67,0,0,1,12,5.3,14.6,14.6,0,0,1,6.08,4.06,14.68,14.68,0,0,1,1.59,1" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+														<path d="M22.34,1a14.67,14.67,0,0,0,0,20.75" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+														<path d="M22.34,1,1,22.34" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+													</svg>
+												</span>
+												<span class="pbmit-button-text">Daha ətraflı</span>
+											</span>
+										</a>
+									</div>
+								</div> 
+							</article>
+							{% endfor %}
+							{% else %}
+							<h5>
+								Axtarışınıza uyğun nəticə mövcud deyil
+							</h5>
+						{% endif %}
+						</div>
+						
+					</div>
+					<div class="col-md-12 col-lg-3 blog-left-col">
+						<aside class="sidebar">
+							<aside class="widget widget-search">
+								<h2 class="widget-title">Bloqlarda axtar...</h2>
+								<form class="search-form">
+									{{ form.query }}
+									<button type="submit" class="search-submit"></button>
+								</form>
+							</aside>
+							<aside class="widget widget-categories">
+								<h2 class="widget-title">Kateqoriyalar</h2>
+								<ul>
+									{% for category in categories %}
+									<li>
+										<span class="pbmit-cat-li {% if currentCategory == category %} active {% endif %}">
+											<a  href="{% if currentCategory == category %}{% url 'blogs' %}{% else %}{% url 'blogs' %}?category={{category.slug}}{% endif %}"><h4 class="category-tag">{{ category.title }}</h4></a>
+											<span class="pbmit-brackets">( {{ category.categoryBlogs.count }} )</span>
+										</span>
+									</li>
+									{% endfor %}
+								</ul>
+							</aside>
+							<aside class="widget widget-recent-post">
+								<h2 class="widget-title">Digər bloqlar </h2>
+									<ul class="recent-post-list">
+										{% for blog in related_blogs %}
+										<li class="recent-post-list-li"> 
+										
+											<div class="pbmit-rpw-content">
+												<span class="pbmit-rpw-date">
+													<a href="{% url 'blog' blog.slug %}">{{ blog.created_at }}</a>
+												</span>
+												<span class="pbmit-rpw-title">
+													<a href="{% url 'blog' blog.slug %}">{{ blog.title }}</a>
+												</span>
+											</div> 
+										</li>
+										{% endfor %}
+									</ul>
+							</aside> 
+						
+							
+						</aside>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Blog Classic End -->
+		
+	</div>
+	<!-- Page Content End -->
+
+	<!-- footer -->
+	{% include 'footer.html' %}
+	<!-- footer End -->
+
+    </div>
+    <!-- Page Wrapper End -->
+
+    <!-- Search Box Start Here -->
+	<div class="pbmit-search-overlay">
+		<div class="pbmit-icon-close">
+			<svg class="qodef-svg--close qodef-m" xmlns="http://www.w3.org/2000/svg" width="28.163" height="28.163" viewBox="0 0 26.163 26.163">
+				<rect width="36" height="1" transform="translate(0.707) rotate(45)"></rect>
+				<rect width="36" height="1" transform="translate(0 25.456) rotate(-45)"></rect>
+			</svg>
+		</div>
+		<div class="pbmit-search-outer"> 
+			<form class="pbmit-site-searchform">
+				<input type="search" class="form-control field searchform-s" name="s" placeholder="Search …">
+				<button type="submit"></button>
+			</form>
+		</div>
+	</div>
+    <!-- Search Box End Here -->
+	
+	<!-- Scroll To Top -->
+	<div class="pbmit-progress-wrap">
+		<svg class="pbmit-progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+		</svg>	
+	</div>
+	<!-- Scroll To Top End -->
+	<script>
+		let csrf = "{{csrf_token}}"
+
+		async function deleteBlog(id) {
+			try {
+				const response = await fetch(`/delete_blog/${id}/`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-CSRFToken': csrf  
+					}
+				});
+	
+				const result = await response.json();
+	
+				if (result.status === 'success') {
+					let blog_div = document.getElementById(`bloq-${id}`)
+					blog_div.remove()
+					alert(result.message);
+					
+				} else {
+					alert(result.message);
+				}
+			} catch (error) {
+				console.error('Hata:', error);
+			}
+		}
+	</script>
+    <!-- JS
+        ============================================ -->
+	<!-- jQuery JS -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!-- Popper JS -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- Bootstrap JS -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- jquery Waypoints JS -->
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<!-- jquery Appear JS -->
+	<script src="{% static 'js/jquery.appear.js' %}"></script>
+	<!-- Numinate JS -->
+	<script src="{% static 'js/numinate.min.js' %}"></script>
+	<!-- Slick JS -->
+	<script src="{% static 'js/swiper.min.js' %}"></script>
+	<!-- Magnific JS -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- Circle Progress JS -->
+	<script src="{% static 'js/circle-progress.js' %}"></script> 
+	<!-- countdown JS -->
+	<script src="{% static 'js/jquery.countdown.min.js' %}"></script> 
+	<!-- AOS -->
+	<script src="{% static 'js/aos.js' %}"></script>
+	<!-- GSAP -->
+	<script src='{% static "js/gsap.js" %}'></script>
+	<!-- Scroll Trigger -->
+	<script src='{% static "js/ScrollTrigger.js" %}'></script>
+	<!-- Split Text -->
+	<script src='{% static "js/SplitText.js" %}'></script>
+	<!-- Magnetic -->
+	<script src='{% static "js/magnetic.js" %}'></script>
+	<!-- GSAP Animation -->
+	<script src='{% static "js/gsap-animation.js" %}'></script>
+	<!-- Scripts JS -->
+	<script src="{% static 'js/scripts.js' %}"></script>
+
+
+   </body>
+
+</html>

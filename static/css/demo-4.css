@@ -1,0 +1,30 @@
+
+
+ :root {
+     --pbmit-global-color: #ee344e;
+     --pbmit-secondary-color: #010d27;
+     --pbmit-light-color: #f8f7f4;
+     --pbmit-white-color: #ffffff;
+     --pbmit-blackish-color: #04121e;
+     --pbmit-link-color-normal: #04121e;
+     --pbmit-link-color-hover: #ee344e;
+     --pbmit-global-color-rgb: 238, 52, 78;
+     --pbmit-secondary-color-rgb: rgb(1, 13, 39);
+     --pbmit-responsive-breakpoint: 1200px;
+
+     --pbmit-body-typography-font-family:'Roboto', sans-serif;
+     --pbmit-body-typography-variant: regular;
+     --pbmit-body-typography-font-size: 16px;
+     --pbmit-body-typography-line-height: 26px;
+     --pbmit-body-typography-color: #6e778c;
+	 
+     --pbmit-heading-typography-font-family:'Sora', sans-serif;
+     --pbmit-heading-color: #04121e;
+     --pbmit-heading-font-variant: 500;
+	 
+     --pbmit-btn-typography-font-family:'Sora', sans-serif;
+     --pbmit-btn-typography-variant: 500;
+     --pbmit-btn-typography-font-size: 13px;
+     --pbmit-btn-typography-line-height: 23px;
+}
+

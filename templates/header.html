@@ -1,0 +1,285 @@
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="{% static 'css/header.css' %}"> 
+
+<div style="z-index:200" id="modal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h4 style="padding:0px 6%;">Bloq əlavə et</h4>
+        <form class="blog-form" id="blog-form" onsubmit="submitForm(event)" enctype="multipart/form-data" novalidate="novalidate">
+            <div style="padding:0px 6%;" class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Başlıq" name="title">
+                </div>
+                <div style="position:relative;" class="col-md-6">
+                    <select class="form-control" id="category" name="category">
+                        <option value="" >
+                            Kateqoriya seç!
+                        </option>
+                        {% for category in categories %}
+
+                            <option value="{{ category.id }}" {% if category.id == selected_category_id %}selected{% endif %}>
+                                {{ category.title }}
+                            </option>
+                        {% endfor %}
+                   
+                    </select>
+                    <img style="height:20px;position:absolute;right:10%;top:25%;" src="https://img.icons8.com/?size=100&id=39786&format=png&color=000000" alt="">
+                </div>
+               
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Yazıçı ad və soyad" name="writer">
+                </div>
+                <div class="col-md-6 custom-file-upload" >
+                    <input style="display:none;" onchange="updateFileName()" type="file" id="image" name="image" accept="image/*" required>
+                    <div style="height:55px; border-bottom: 1px solid rgba(3, 27, 78, 0.8);">
+                    <button style="    border-bottom: 1px solid rgba(3, 27, 78, 0.8);"  type="button" onclick="document.getElementById('image').click()">Şəkil Seç</button>
+                    <span  id="file-name">Şəkil seçilmedi</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <textarea name="content" cols="40" rows="10" class="form-control" placeholder="Məzmun"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <button class="pbmit-btn">
+                        <span class="pbmit-button-content-wrapper">
+                            <span class="pbmit-button-icon pbmit-align-icon-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22.76" height="22.76" viewBox="0 0 22.76 22.76">
+                                    <title>black-arrow</title>
+                                    <path d="M22.34,1A14.67,14.67,0,0,1,12,5.3,14.6,14.6,0,0,1,6.08,4.06,14.68,14.68,0,0,1,1.59,1" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                    <path d="M22.34,1a14.67,14.67,0,0,0,0,20.75" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                    <path d="M22.34,1,1,22.34" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                </svg>
+                            </span>
+                            <span class="pbmit-button-text">Bloqu paylaş !</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="col-md-12 col-lg-12 message-status"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<header class="site-header header-style-2">
+    <div class="container-fluid">
+        <div class="pbmit-header-content d-flex justify-content-between align-items-center">
+            <div class="pbmit-logo-menuarea d-flex align-items-center">
+                <div class="site-branding mobileFalse">
+                    <h6 class="site-title ">
+                        Nicat Məmmədov
+                    </h6>
+                </div>
+                <div class="site-branding mobileTrue">
+              <a href="#" class="site-title"  id="openModal2"> Bloq əlavə et </a>
+                </div>
+            
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="site-navigation">
+                    <nav class="main-menu navbar-expand-xl navbar-light">
+                        <div class="navbar-header">
+                            <!-- Toggle Button --> 
+                            <button class="navbar-toggler" type="button">
+                                <i class="pbmit-base-icon-menu-1"></i>
+                            </button>
+                        </div>
+                        <div class="pbmit-mobile-menu-bg"></div>
+                        <div class="collapse navbar-collapse clearfix show" id="pbmit-menu">
+                            <div class="pbmit-menu-wrap">
+                                <span class="closepanel">
+                                    <svg class="qodef-svg--close qodef-m" xmlns="http://www.w3.org/2000/svg" width="20.163" height="20.163" viewBox="0 0 26.163 26.163">
+                                        <rect width="36" height="1" transform="translate(0.707) rotate(45)"></rect>
+                                        <rect width="36" height="1" transform="translate(0 25.456) rotate(-45)"></rect>
+                                    </svg>
+                                </span>
+                                <ul class="navigation clearfix">
+                                    
+                                    <li class="{% if request.resolver_match.url_name == 'blogs' %} active {% endif %}">
+                                        <a href="{% url 'blogs' %}">Bloqlar</a>
+                                      
+                                    </li>
+                                    <li >
+                                        <a href="#" id="openModal"> Bloq əlavə et </a>
+                                      
+                                       
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+           
+            <div class="pbmit-right-box d-flex align-items-center">
+                <div class="pbmit-button-box">
+                    <div class="pbmit-header-button">
+                        <a href="tel:+994 513126599">
+                            <span class="pbmit-header-button-text-1">+994 513126599</span>		
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="pbmit-button-box-second">
+                    <a class="pbmit-btn" href="tel:+994 513126599">
+                        <span class="pbmit-button-content-wrapper">
+                            <span class=" pbmit-align-icon-right">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <span class="pbmit-button-text">+994 51 312 65 99</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    function updateFileName() {
+        const input = document.getElementById('image');
+        const fileName = input.files.length > 0 ? input.files[0].name : 'Dosya seçilmedi';
+        document.getElementById('file-name').textContent = fileName;
+    }
+</script>
+<script>
+    const modal = document.getElementById('modal');
+
+// Get open modal button
+const openModal = document.getElementById('openModal');
+const openModal2 = document.getElementById('openModal2');
+
+// Get close button
+const closeModal = document.getElementById('closeModal');
+
+// Open modal when the button is clicked
+openModal.onclick = function() {
+    modal.style.display = 'block';
+}
+openModal2.onclick = function() {
+    modal.style.display = 'block';
+}
+
+// Close modal when the close button is clicked
+closeModal.onclick = function() {
+    modal.style.display = 'none';
+    document.getElementById("blog-form").reset();
+
+}
+
+// Close modal when clicking outside of the modal content
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+        
+    }
+}
+</script>
+
+<script>
+    let url =  "{{request.resolver_match.url_name}}"
+    async function submitForm(event) {
+        event.preventDefault();
+        console.log('----------------')
+        const formData = new FormData(document.getElementById('blog-form'));
+        console.log(formData)
+        const response = await fetch('{% url "blog_create" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            document.getElementById("blog-form").reset();
+            if(url === 'blogs'){
+                const blogContainer = document.querySelector('.pbmit-element-posts-wrapper');
+                const newBlog = `
+                    <article class="post blog-classic" id="bloq-${result.blog_id}">   
+                        <div class="pbmit-featured-img-wrapper">
+                            <div class="deleteBlog-class" onclick="deleteBlog('${result.blog_id}')" style="cursor:pointer;position:absolute;right:2%;top:5%;color:red;background-color:white;border:1px solid black;padding:0px 10px;border-radius:10px;font-weight:700;">Bloqu sil <img src="https://img.icons8.com/?size=100&id=102350&format=png&color=000000" style="height:30px;"></div>
+                            <div class="pbmit-featured-wrapper">
+                                <a href="${result.blog_url}">
+                                    <img style="width:100%;min-height:220px;" src="${result.blog_image}" class="img-fluid" alt="${result.blog_title}">
+                                </a>
+                            </div>
+                            <span class="pbmit-meta pbmit-meta-cat">
+                                <a href="${result.blog_url}" rel="category tag">${result.blog_category}</a>
+                            </span>
+                        </div>  
+                        <div class="pbmit-blog-classic-inner">
+                            <div class="pbmit-blog-meta pbmit-blog-meta-top">	
+                                <span class="pbmit-meta pbmit-meta-date">
+                                    <i class="pbmit-base-icon-calendar-3"></i>
+                                    <a href="${result.blog_url}" rel="bookmark">
+                                        <time class="entry-date published" datetime="${result.blog_created_at}">${result.blog_created_at}</time>
+                                    </a>
+                                </span>
+                                <span class="pbmit-meta pbmit-meta-author">
+                                    <i class="pbmit-base-icon-user-3"></i>
+                                    <a class="pbmit-author-link" href="${result.blog_url}">${result.blog_writer}</a>
+                                </span>
+                                <span class="pbmit-meta pbmit-meta-comments pbmit-comment-bigger-than-zero">
+                                    <i class="pbmit-base-icon-chat-3"></i>0 şərh
+                                </span>			
+                            </div>
+                            <h3 class="pbmit-post-title">
+                                <a href="${result.blog_url}">${result.blog_title}</a>
+                            </h3>
+                            <div class="pbmit-entry-content">
+                                <div class="pbmit-firstletter-blog">
+                                    <p>${result.blog_content}</p>
+                                </div>
+                                <a class="pbmit-btn" href="${result.blog_url}">
+                                    <span class="pbmit-button-content-wrapper">
+                                        <span class="pbmit-button-icon pbmit-align-icon-right">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22.76" height="22.76" viewBox="0 0 22.76 22.76">
+                                                <title>black-arrow</title>
+                                                <path d="M22.34,1A14.67,14.67,0,0,1,12,5.3,14.6,14.6,0,0,1,6.08,4.06,14.68,14.68,0,0,1,1.59,1" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                                <path d="M22.34,1a14.67,14.67,0,0,0,0,20.75" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                                <path d="M22.34,1,1,22.34" transform="translate(-0.29 -0.29)" fill="none" stroke="#000" stroke-width="2"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="pbmit-button-text">Daha ətraflı</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div> 
+                    </article>
+                `;
+                blogContainer.insertAdjacentHTML('afterbegin', newBlog);
+            }
+            Swal.fire('Göndərildi!', result.message, 'success');
+        } else {
+            let errorMessages = '';
+            for (let field in result.errors) {
+                switch(field) {
+                    case 'title':
+                        errorMessages += `Başlıq ${result.errors[field].join(', ')}\n`;
+                        break;
+                    case 'content':
+                        errorMessages += `Məzmun: ${result.errors[field].join(', ')}\n`;
+                        break;
+                    case 'writer':
+                        errorMessages += `Müəllif: ${result.errors[field].join(', ')}\n`;
+                        break;
+                    case 'category':
+                        errorMessages += `Kateqoriya: ${result.errors[field].join(', ')}\n`;
+                        break;
+                    case 'image':
+                        errorMessages += `Şəkil: ${result.errors[field].join(', ')}\n`;
+                        break;
+                    
+                    default:
+                        errorMessages += `${field}: ${result.errors[field].join(', ')}\n`;
+                        break;
+                }
+                break;
+            }
+            Swal.fire('Xəta!', errorMessages, 'error');
+        }
+    }
+</script>
